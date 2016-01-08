@@ -44,7 +44,7 @@ namespace MSRAAI
 	double CEDSGD::TrainOneSample(int iter)
 	{
 		double loss = 0.;
-		double lr = (double) pParam->m_dimension / (10 * (pParam->m_dimension + iter));
+		double lr = pParam->m_dimension / (pParam->m_lradjust * (pParam->m_dimension + iter));
 		int idx = _pController->_pGenerator->SampleOne();
 		double* x = _pController->GetX(idx);
 		double y = _pController->GetY(idx);

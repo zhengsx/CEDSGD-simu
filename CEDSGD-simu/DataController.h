@@ -14,8 +14,9 @@ namespace MSRAAI
 	public:
 		SGDParams()
 		{
-			m_dimension = 30;
+			m_dimension = 300;
 			m_learningrate = 0.1;
+			m_lradjust = 100.;
 			m_nsamples = 10000;
 
 			m_T = 2000;
@@ -36,6 +37,7 @@ namespace MSRAAI
 
 		int m_dimension;
 		double m_learningrate;
+		double m_lradjust;
 		int m_nsamples;
 
 		int m_T;
