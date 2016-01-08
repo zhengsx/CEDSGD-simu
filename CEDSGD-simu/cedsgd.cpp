@@ -97,8 +97,9 @@ int main(int argc, char** argv)
 		parseconfig(configpath, sim->pParam);
 
 	sim->Init();
-
-
+	sim->Test();
+	sim->Train();
+	sim->Test();
 	fclose(stderr);
 	return 0;
 }

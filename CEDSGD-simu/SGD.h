@@ -15,11 +15,13 @@ namespace MSRAAI
 		void Init();
 		void Train();
 		void ParallelTrain(int nbclients = 4);
-		void Test();
+		double Test();
 
 		SGDParams * pParam;
 
 	private:
+		double TrainOneSample(int iter);
+
 		double* _w;
 
 		DataController * _pController;

@@ -18,7 +18,7 @@ namespace MSRAAI
 			m_learningrate = 0.1;
 			m_nsamples = 10000;
 
-			m_T = 20000;
+			m_T = 2000;
 			m_m = 10;
 
 			m_umin = 0.;
@@ -29,6 +29,8 @@ namespace MSRAAI
 
 			m_emean = 0.;
 			m_estd = 1.;
+
+			m_show = 100;
 		};
 		~SGDParams(){}
 
@@ -43,6 +45,7 @@ namespace MSRAAI
 		double m_xmean, m_xstd;
 		double m_emean, m_estd;
 
+		int m_show;
 	};
 
 	class DataGenerator
@@ -50,7 +53,7 @@ namespace MSRAAI
 	public:
 		DataGenerator(int n)
 		{
-			_sampler = new uniform_int_distribution<int>(0, n);
+			_sampler = new uniform_int_distribution<int>(0, n - 1);
 		};
 		~DataGenerator()
 		{
