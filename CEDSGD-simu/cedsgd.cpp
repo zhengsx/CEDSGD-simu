@@ -18,7 +18,6 @@ namespace MSRAAI
 	{
 		fprintf(stderr, "Redirecting stderr to file %s\n", logpath.c_str());
 		FILE* f = fopen(logpath.c_str(), "w");
-
 		if (_dup2(_fileno(f), 2) == -1)
 		{
 			fprintf(stderr, "unexpected failure to redirect stderr to log file.\n");
@@ -49,7 +48,7 @@ namespace MSRAAI
 	{
 		ifstream configfilestream(configfilepath);
 		if (!configfilestream)
-			cout << "null stream!!\n";
+			fprintf(stderr, "Config File Read Failed.\n");
 		string strline, strcontext;
 		bool isRedirectStderr = false;
 		while (getline(configfilestream, strline))
