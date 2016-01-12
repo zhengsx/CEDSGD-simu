@@ -1,0 +1,23 @@
+#redirect stderr output.
+stderr=..\out\test.log
+
+#experiment setting
+#number of client training together
+nparallel=4
+#dimension
+d=300
+#init learning rate
+lr=0.1
+#learning rate decay: lr = d / (e + (d + t))
+#where e is a const, d is dimension, t is the number of samples trained.
+e=100.0
+
+#number of samples
+n=10000
+#number of iteration 
+T=2000
+#frequence of sync. useless when nparallel=1
+m=10
+
+#number of show train and test result
+show=100

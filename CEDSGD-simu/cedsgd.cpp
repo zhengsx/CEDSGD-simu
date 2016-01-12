@@ -48,16 +48,27 @@ namespace MSRAAI
 	void parseconfig(const string & configfilepath, SGDParams* param)
 	{
 		ifstream configfilestream(configfilepath);
+		if (!configfilestream)
+			cout << "null stream!!\n";
 		string strline, strcontext;
 		bool isRedirectStderr = false;
 		while (getline(configfilestream, strline))
 		{
-			if (strline.compare(0, 7, "stderr=") == 0)
+			if (strline.compare(0, 1, "#") == 0)
+			{
+				continue;
+			}
+			else if (strline.compare(0, 7, "stderr=") == 0)
 			{
 				assert(!isRedirectStderr);
 				strcontext = strline.substr(7, strline.length() - 7);
 				RedirectStdErr(strcontext);
 				isRedirectStderr = !isRedirectStderr;
+			}
+			else if (strline.compare(0, 10, "nparallel=") == 0)
+			{
+				strcontext = strline.substr(10, strline.length() - 10);
+				param->m_nclients = stoi(strcontext);
 			}
 			else if (strline.compare(0, 2, "d=") == 0)
 			{
@@ -68,6 +79,11 @@ namespace MSRAAI
 			{
 				strcontext = strline.substr(3, strline.length() - 3);
 				param->m_learningrate = stod(strcontext);
+			}
+			else if (strline.compare(0, 2, "e=") == 0)
+			{
+				strcontext = strline.substr(2, strline.length() - 2);
+				param->m_e = stod(strcontext);
 			}
 			else if (strline.compare(0, 2, "n=") == 0)
 			{
@@ -84,6 +100,15 @@ namespace MSRAAI
 				strcontext = strline.substr(2, strline.length() - 2);
 				param->m_m = stoi(strcontext);
 			}
+			else if (strline.compare(0, 5, "show=") == 0)
+			{
+				strcontext = strline.substr(5, strline.length() - 5);
+				param->m_show = stoi(strcontext);
+			}
+			else
+			{
+				continue;
+			}
 		}
 		configfilestream.close();
 	}
@@ -97,9 +122,11 @@ int main(int argc, char** argv)
 		parseconfig(configpath, sim->pParam);
 
 	sim->Init();
-	sim->Test();
-	sim->Train();
-	sim->Test();
+	if (sim->pParam->m_nclients == 1)
+		sim->Train();
+	else if (sim->pParam->m_nclients > 1)
+		sim->ParallelTrain();
+	fprintf(stderr, "Test loss = %f\n", sim->Test());
 	fclose(stderr);
 	return 0;
 }

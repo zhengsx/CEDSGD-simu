@@ -14,12 +14,13 @@ namespace MSRAAI
 	public:
 		SGDParams()
 		{
+			m_nclients = 4;
 			m_dimension = 300;
 			m_learningrate = 0.1;
-			m_lradjust = 100.;
+			m_e = 100.;
 			m_nsamples = 10000;
 
-			m_T = 2000;
+			m_T = 500;
 			m_m = 10;
 
 			m_umin = 0.;
@@ -37,7 +38,7 @@ namespace MSRAAI
 
 		int m_dimension;
 		double m_learningrate;
-		double m_lradjust;
+		double m_e;
 		int m_nsamples;
 
 		int m_T;
@@ -48,6 +49,8 @@ namespace MSRAAI
 		double m_emean, m_estd;
 
 		int m_show;
+
+		int m_nclients;
 	};
 
 	class DataGenerator
